@@ -1,0 +1,4 @@
+# Nmap 7.93 scan initiated Sun Jun 11 20:17:45 2023 as: nmap -Pn -sV -p 445 --script ssl-enum-ciphers -iL /home/kali/Desktop/nmap.txt -oA /home/kali/Desktop/tools/nmap_poc/Q3_CBJ/172_20_110_x/nmap_172_20_110_x
+Host: 172.20.110.12 ()	Status: Up
+Host: 172.20.110.12 ()	Ports: 445/closed/tcp//microsoft-ds///
+# Nmap done at Sun Jun 11 20:17:59 2023 -- 1 IP address (1 host up) scanned in 14.17 seconds

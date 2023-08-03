@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE nmaprun>
+<?xml-stylesheet href="file:///usr/bin/../share/nmap/nmap.xsl" type="text/xsl"?>
+<!-- Nmap 7.93 scan initiated Sun Jun 11 20:17:45 2023 as: nmap -Pn -sV -p 445 -&#45;script ssl-enum-ciphers -iL /home/kali/Desktop/nmap.txt -oA /home/kali/Desktop/tools/nmap_poc/Q3_CBJ/172_20_110_x/nmap_172_20_110_x -->
+<nmaprun scanner="nmap" args="nmap -Pn -sV -p 445 -&#45;script ssl-enum-ciphers -iL /home/kali/Desktop/nmap.txt -oA /home/kali/Desktop/tools/nmap_poc/Q3_CBJ/172_20_110_x/nmap_172_20_110_x" start="1686529065" startstr="Sun Jun 11 20:17:45 2023" version="7.93" xmloutputversion="1.05">
+<scaninfo type="connect" protocol="tcp" numservices="1" services="445"/>
+<verbose level="0"/>
+<debugging level="0"/>
+<host starttime="1686529079" endtime="1686529079"><status state="up" reason="user-set" reason_ttl="0"/>
+<address addr="172.20.110.12" addrtype="ipv4"/>
+<hostnames>
+</hostnames>
+<ports><port protocol="tcp" portid="445"><state state="closed" reason="conn-refused" reason_ttl="0"/><service name="microsoft-ds" method="table" conf="3"/></port>
+</ports>
+<times srtt="6107" rttvar="6107" to="100000"/>
+</host>
+<runstats><finished time="1686529079" timestr="Sun Jun 11 20:17:59 2023" summary="Nmap done at Sun Jun 11 20:17:59 2023; 1 IP address (1 host up) scanned in 14.17 seconds" elapsed="14.17" exit="success"/><hosts up="1" down="0" total="1"/>
+</runstats>
+</nmaprun>

@@ -1,0 +1,123 @@
+#!/bin/bash
+
+# Define color variables
+bold=$(tput bold)
+normal=$(tput sgr0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+purple=$(tput setaf 5)
+
+# Define color variables
+bold=$(tput bold)
+normal=$(tput sgr0)
+red=$(tput setaf 1)
+green=$(tput setaf 2)
+yellow=$(tput setaf 3)
+blue=$(tput setaf 4)
+purple=$(tput setaf 5)
+
+    echo "${bold}${blue}-------------------------------------------------------------------"
+    echo "|    ${yellow}Created By: Amirul Isyraf @ Abim   ${green}Date:7 June 2023, 1600H   |"
+    echo "|                    ${blue}Tools version: 1.0.03                        |"
+    echo "|                                                                 |"
+    echo "|    ${yellow}*                        / \\	*			  |"
+    echo "|                 ${yellow}*          /   \\			*         |"
+    echo "|             ${yellow}*             |     |		*	          |"
+    echo "|                      ${yellow}*    |     |			*         |"
+    echo "|       ${yellow}*                   |     |			 *        |"
+    echo "|              ${yellow}*           /       \\		*	          |"
+    echo "|    ${yellow}*                    /_ _ _ _ _\\	*		          |"
+    echo "|                  ${yellow}*      || || || ||                 *           |"
+    echo "|          ${yellow}*              || || || ||          *              *   |"
+    echo "|                  ${yellow}*       *  * *  *                       *      |"
+    echo "|      ${yellow}*                    * *  * *                *             |"
+    echo "|   ${yellow}*                        *    *           *                   |"
+    echo "|            ${yellow}*                                          *         |"
+    echo "|                                                                 |"
+    echo "|           ${red}Credit: Special thanks to chong the mafafafa          |"
+    echo "|                       for giving me this task :)                |"
+    echo "${blue}-------------------------------------------------------------------${normal}"
+
+# Step 1: Changing directories
+echo ${green}${bold}"List of folders:"
+ls -d */
+echo ${purple}"---------------------------------------------------------------------"
+echo ${blue}${bold}"Choose a Folder:${yellow}"
+select folder_option in */ "Add a New Folder"; do
+  if [[ $folder_option == "Add a New Folder" ]]; then
+    echo ${blue}${bold}"Enter the name of the new folder:${blue}${normal}"
+    read new_folder
+    mkdir "$new_folder"
+    cd "$new_folder"
+    break
+  elif [[ -d $folder_option ]]; then
+    cd "$folder_option"
+    break
+  else
+    echo ${red}${bold}"Invalid option. Please choose again."
+  fi
+done
+echo 
+# Step 2: Print IP and port
+echo ${green}${bold}"IP to detect IP segment: $1"
+echo ${green}${bold}"Port to scan: $2"
+# Step 3: Check and change to IP segment folder
+IFS='.' read -r -a ip_segments <<< "$1"
+ip_segment="${ip_segments[0]}_${ip_segments[1]}_${ip_segments[2]}_x"
+folder_path="${ip_segment}"
+
+if [[ ! -d "$folder_path" ]]; then
+  mkdir "$folder_path"
+  echo ${green}${bold}"Created folder '$folder_path'."
+fi
+
+cd "$folder_path"
+# Step 4: NMAP task
+echo ${green}${bold}"File containing list of IP to be scanned by NMAP: $3"
+nmap_result_dir=$(pwd)
+echo
+echo ${blue}${bold}"Select an NMAP script option:${yellow}"
+select script_option in "SSL Enum Cipher:ssl-enum-ciphers" "SSH2 Enum Algos:ssh2-enum-algos" "SSL Cert:ssl-cert" "SMB OS DISCOVERY:smb-os-discovery" "CUSTOM"; do
+  case $script_option in
+    "SSL Enum Cipher:ssl-enum-ciphers")
+      nmap_script="ssl-enum-ciphers"
+      break
+      ;;
+    "SSH2 Enum Algos:ssh2-enum-algos")
+      nmap_script="ssh2-enum-algos"
+      break
+      ;;
+    "SSL Cert:ssl-cert")
+      nmap_script="ssl-cert"
+      break
+      ;;
+    "SMB OS DISCOVERY:smb-os-discovery")
+      nmap_script="smb-os-discovery"
+      break
+      ;;
+    "CUSTOM")
+      echo "Enter your custom NMAP script:"
+      read custom_script
+      nmap_script="$custom_script"
+      break
+      ;;
+    *)
+      echo "Invalid option. Please choose again."
+      ;;
+  esac
+done
+
+if [[ $2 == "all" || $2 == "A" || $2 == "a" || $2 == "ALL" || $2 == "All" ]]; then
+  nmap_command="nmap -Pn -sV -p- --script $nmap_script -iL $3 -oA $nmap_result_dir/nmap_$ip_segment"
+else
+  nmap_command="nmap -Pn -sV -p $2 --script $nmap_script -iL $3 -oA $nmap_result_dir/nmap_$ip_segment"
+fi
+echo
+echo ${blue}${bold}"Running NMAP command:"
+echo ${yellow}"$nmap_command"
+eval "$nmap_command"
+echo "${green}NMAP tasks completed.${normal}"
+echo ${purple}"---------------------------------------------------------------------"
+
